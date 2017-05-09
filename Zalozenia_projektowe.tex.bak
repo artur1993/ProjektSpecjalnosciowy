@@ -1,0 +1,86 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[a4paper,12pt]{article}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pdfpages}
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ucs}
+\usepackage{epstopdf}
+\usepackage{epsfig}
+
+
+\begin{document}
+% Strona tytułowa
+\begin{titlepage}
+\begin{center}
+\vspace*{1cm}
+{ \Large \textbf{ Założenia projektowe }}\\[1cm]
+
+%{ \Large \textsc{\\ robota mobilnego} }\\[2cm]
+
+{ \Large Projekt specjalnościowy ARR \\
+\textbf{Stanowisko do badania systemu sensorycznego cybernetycznej dłoni}}\\
+Semestr letni 2016/2017\\[2cm]
+
+\Large{
+\textbf{Zespół:}}\\
+\large {Artur Błażejewski, 200541 (A. B. odpowiedzialny)\\
+Dawid Chechelski, 197002(D. C.)\\
+Paweł Jachimowski, 200355 (P. J.)\\
+Krzysztof Kwieciński, 200418 (K. K.)\\
+Witold Lipieta, 200415 (W. L.)}
+
+\vfill
+\Large
+Politechnika Wrocławska\\
+\large
+Wydział Elektroniki\\
+Automatyka i Robotyka\\
+ARR
+\end{center}
+\end{titlepage}
+
+% Treść
+	\section{Założenia projektowe}
+		\begin{enumerate}
+			\item Analiza stanowiska badawczego:
+				\begin{itemize}
+					\item Konstrukcja mechaniczna i elektroniczna ręki~(D.C., P.J.)~22.03
+					\item Działanie czujników i sposób komunikacji z mikrokontrolerem~(W.L.)~22.03
+					\item Dokumentacja
+				\end{itemize}
+			\item Zapoznanie się z dokumentacją i kodem obecnego programu do wizualizacji danych.~(K.K.)~22.03
+			\item Złożenie zamówienia na zakup brakujących elementów układu. (A.B.)~5.04
+			\item Montaż czujników na palcach mechanicznej ręki.~(A.B.)~5.04
+			\item Zaprojektowanie interfejsu pośredniczącego między czujnikami a aplikacją komputerową:
+				\begin{itemize}
+					\item Wybór modułu z mikrokontrolerem (W.L.)~29.03
+					\item Opracowanie sposobu komunikacji i akwizycji danych (P.J.)~12.04
+					\item Przesyłanie danych do komputera (P.J.)~19.04
+				\end{itemize}
+			\item Rozwój lub stworzenie programu do wizualizacji danych z czujników.~(K.K.)~26.04
+			\item Stworzenie raportu.~17.05
+	\end{enumerate}
+	
+	\section{Stan projektu na dzień 09.05.2017}
+		\subsection{Część mechaniczna konstrukcji}
+		\subsection{Część elektroniczna}
+			\subsubsection{Płytka i połączenia czujników}
+			\subsubsection{Poł}
+		\subsection{Software części elektronicznej}
+			\subsubsection{Program na nucleo}
+			\subsubsection{Przesyłanie danych do komputera}
+		\subsection{Software - wizualizacji}
+	
+	
+	
+	
+\end{document}
