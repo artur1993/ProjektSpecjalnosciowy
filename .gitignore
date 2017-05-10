@@ -1,1 +1,11 @@
-build/
+wizualizacja/release
+wizualizacja/debug
+*~
+*.aux
+*.bbl
+*.blg
+*.log
+*.gz
+
+*.autosave
+*.user.*
