@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
-
+#include <QProgressBar>
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +17,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void setupBackground();
+    void setupFingers();
+    void setFinger(QProgressBar *finger, int x, int y, int value);
 private:
     Ui::MainWindow *ui;
     QPushButton *pushButton;
