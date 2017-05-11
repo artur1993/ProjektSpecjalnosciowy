@@ -11,7 +11,7 @@ class ColoredProgressBar : public QProgressBar
 public:
     explicit ColoredProgressBar(QWidget *parent = 0);
     ~ColoredProgressBar();
-    void paintColor(QPainter& painter, QColor color, int beginPosition, int currentPosition);
+    void paintColor(QPainter& painter, QColor color, int beginPosition, int endPosition);
 
 protected:
 

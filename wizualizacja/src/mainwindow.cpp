@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "coloredprogressbar.h"
+#include <iostream>
 #include <QCoreApplication>
 
 void MainWindow::setupBackground()
@@ -25,22 +26,24 @@ void MainWindow::setFinger(QProgressBar *finger, int x, int y, int value)
     finger->setValue(value);
     finger->setTextVisible(false);
     finger->setOrientation(Qt::Horizontal);
+    finger->setMinimum(0);
+    finger->setMaximum(100);
 }
 
 void MainWindow::setupFingers()
 {
-    setFinger(ui->finger11, 848, 24, 20);
-    setFinger(ui->finger12, 737, 41, 30);
-    setFinger(ui->finger13, 666, 70, 40);
-    setFinger(ui->finger21, 1020, 140, 50);
-    setFinger(ui->finger22, 910, 148, 60);
-    setFinger(ui->finger23, 805, 160, 70);
-    setFinger(ui->finger31, 1033, 248, 80);
-    setFinger(ui->finger32, 934, 240, 90);
-    setFinger(ui->finger33, 843, 236, 0);
-    setFinger(ui->finger41, 997, 338, 10);
-    setFinger(ui->finger42, 910, 326, 20);
-    setFinger(ui->finger43, 812, 312, 30);
+    setFinger(ui->finger11, 843, 45, 0);
+    setFinger(ui->finger12, 733, 37, 10);
+    setFinger(ui->finger13, 614, 97, 20);
+    setFinger(ui->finger21, 1015, 143, 30);
+    setFinger(ui->finger22, 910, 152, 40);
+    setFinger(ui->finger23, 824, 162, 50);
+    setFinger(ui->finger31, 1030, 248, 60);
+    setFinger(ui->finger32, 934, 242, 70);
+    setFinger(ui->finger33, 844, 238, 80);
+    setFinger(ui->finger41, 997, 338, 90);
+    setFinger(ui->finger42, 902, 326, 100);
+    setFinger(ui->finger43, 812, 314, 90);
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -52,44 +55,56 @@ MainWindow::MainWindow(QWidget *parent) :
     setupBackground();
     setupFingers();
 
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(changeValuePlus()));
+    timer->start(50);
+
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(changeValuePlus()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(changeValueMinus()));
 }
 
+void MainWindow::changeFingerValue(QProgressBar* finger, const int increment)
+{
+    if (finger->value() == 100) {
+        finger->setValue(0);
+    }
+    else {
+        finger->setValue(finger->value() + increment);
+    }
+}
+
 void MainWindow::changeValuePlus()
 {
-    int increment = 5;
-    int value = ui->finger11->value();
-    ui->finger11->setValue(value+increment);
-    ui->finger12->setValue(value+increment);
-    ui->finger13->setValue(value+increment);
-    ui->finger21->setValue(value+increment);
-    ui->finger22->setValue(value+increment);
-    ui->finger23->setValue(value+increment);
-    ui->finger31->setValue(value+increment);
-    ui->finger32->setValue(value+increment);
-    ui->finger33->setValue(value+increment);
-    ui->finger41->setValue(value+increment);
-    ui->finger42->setValue(value+increment);
-    ui->finger43->setValue(value+increment);
+    int increment = 2;
+    changeFingerValue(ui->finger11, increment);
+    changeFingerValue(ui->finger12, increment);
+    changeFingerValue(ui->finger13, increment);
+    changeFingerValue(ui->finger21, increment);
+    changeFingerValue(ui->finger22, increment);
+    changeFingerValue(ui->finger23, increment);
+    changeFingerValue(ui->finger31, increment);
+    changeFingerValue(ui->finger32, increment);
+    changeFingerValue(ui->finger33, increment);
+    changeFingerValue(ui->finger41, increment);
+    changeFingerValue(ui->finger42, increment);
+    changeFingerValue(ui->finger43, increment);
 }
 
 void MainWindow::changeValueMinus()
 {
-    int increment = 5;
-    int value = ui->finger11->value();
-    ui->finger11->setValue(value-increment);
-    ui->finger12->setValue(value-increment);
-    ui->finger13->setValue(value-increment);
-    ui->finger21->setValue(value-increment);
-    ui->finger22->setValue(value-increment);
-    ui->finger23->setValue(value-increment);
-    ui->finger31->setValue(value-increment);
-    ui->finger32->setValue(value-increment);
-    ui->finger33->setValue(value-increment);
-    ui->finger41->setValue(value-increment);
-    ui->finger42->setValue(value-increment);
-    ui->finger43->setValue(value-increment);
+    int decrement = -5;
+    changeFingerValue(ui->finger11, decrement);
+    changeFingerValue(ui->finger12, decrement);
+    changeFingerValue(ui->finger13, decrement);
+    changeFingerValue(ui->finger21, decrement);
+    changeFingerValue(ui->finger22, decrement);
+    changeFingerValue(ui->finger23, decrement);
+    changeFingerValue(ui->finger31, decrement);
+    changeFingerValue(ui->finger32, decrement);
+    changeFingerValue(ui->finger33, decrement);
+    changeFingerValue(ui->finger41, decrement);
+    changeFingerValue(ui->finger42, decrement);
+    changeFingerValue(ui->finger43, decrement);
 }
 
 MainWindow::~MainWindow()
