@@ -25,8 +25,19 @@ public:
     void changeFingerValue(QProgressBar *finger, const int increment);
 private:
     Ui::MainWindow *ui;
-    QPushButton *pushButton;
     QTimer *timer;
+    QProgressBar *finger41;
+    QProgressBar *finger42;
+    QProgressBar *finger43;
+    QProgressBar *finger31;
+    QProgressBar *finger32;
+    QProgressBar *finger33;
+    QProgressBar *finger21;
+    QProgressBar *finger22;
+    QProgressBar *finger23;
+    QProgressBar *finger13;
+    QProgressBar *finger12;
+    QProgressBar *finger11;
 
 private slots:
     void changeValuePlus();

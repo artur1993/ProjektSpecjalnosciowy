@@ -1,5 +1,6 @@
 wizualizacja/release
 wizualizacja/debug
+wizualizacja/build*
 *~
 *.aux
 *.bbl
@@ -8,6 +9,6 @@ wizualizacja/debug
 *.gz
 
 *.autosave
-*.user.*
+*user*
 
 materialy
