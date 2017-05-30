@@ -66,12 +66,22 @@ MainWindow::MainWindow(QWidget *parent) :
     setupBackground();
     setupFingers();
 
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(changeValuePlus()));
-    timer->start(50);
+    //timer = new QTimer(this);
+    //connect(timer, SIGNAL(timeout()), this, SLOT(changeValuePlus()));
+    //timer->start(50);
 
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(changeValuePlus()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(changeValueMinus()));
+
+    serialPort = new QSerialPort(this);
+    serialPort->setPortName( QString("COM3") );
+    serialPort->setBaudRate( QSerialPort::Baud19200 );
+    serialPort->setDataBits( QSerialPort::Data8 );
+    serialPort->setParity( QSerialPort::NoParity );
+    serialPort->setStopBits( QSerialPort::OneStop );
+
+    serialPort->open(QIODevice::ReadOnly);
+    connect(serialPort, &QSerialPort::readyRead, this, &MainWindow::handleReadyRead);
 }
 
 void MainWindow::changeFingerValue(QProgressBar* finger, const int increment)
@@ -116,6 +126,18 @@ void MainWindow::changeValueMinus()
     changeFingerValue(finger41, decrement);
     changeFingerValue(finger42, decrement);
     changeFingerValue(finger43, decrement);
+}
+
+void MainWindow::handleReadyRead()
+{
+    static qint32 number = 0;
+
+    ++number;
+    //readData.append(serialPort->readAll());
+    //ui->label->setText(readData);
+    // readData.clear();
+
+    ui->label->setText(QString::number(number));
 }
 
 MainWindow::~MainWindow()

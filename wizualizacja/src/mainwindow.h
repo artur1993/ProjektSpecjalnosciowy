@@ -5,6 +5,8 @@
 #include <QPushButton>
 #include <QProgressBar>
 #include <QTimer>
+#include <QSerialPort>
+#include <QByteArray>
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +25,7 @@ public:
     void setFinger(QProgressBar *finger, int x, int y, int value);
     void setFingerValue(int value, int increment);
     void changeFingerValue(QProgressBar *finger, const int increment);
+
 private:
     Ui::MainWindow *ui;
     QTimer *timer;
@@ -39,9 +42,14 @@ private:
     QProgressBar *finger12;
     QProgressBar *finger11;
 
+    QSerialPort *serialPort;
+    QByteArray  readData;
+
 private slots:
     void changeValuePlus();
     void changeValueMinus();
+
+    void handleReadyRead();
 };
 
 #endif // MAINWINDOW_H
