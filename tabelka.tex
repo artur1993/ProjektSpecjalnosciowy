@@ -1,0 +1,20 @@
+\documentclass{article}
+
+\usepackage{array}
+
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\begin{document}
+
+\begin{tabular}{|C{2cm}|C{2cm}|C{2cm}|}
+\multicolumn{1}{c}{I2C3} & \multicolumn{1}{c}{I2C2} & \multicolumn{1}{c}{I2C1} \\ \hline 
+x & PA3 & PC0 \\ \hline 
+PB8\mbox{ } & PA2 & PC1 \\ \hline 
+PC10 & PB5 & PB0 \\ \hline 
+PC11 & PB4 & PA4 \\ \hline 
+PC12 & PC7 & PA1 \\ \hline 
+PB14 & PA7 & PA0 \\ \hline 
+PB15 & PA6 & PC2 \\ \hline 
+\end{tabular} 
+
+\end{document}
