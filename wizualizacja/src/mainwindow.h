@@ -6,6 +6,7 @@
 #include <QProgressBar>
 #include <QTimer>
 #include <QSerialPort>
+#include <QSerialPortInfo>
 #include <QByteArray>
 
 namespace Ui {
@@ -25,6 +26,8 @@ public:
     void setFinger(QProgressBar *finger, int x, int y, int value);
     void setFingerValue(int value, int increment);
     void changeFingerValue(QProgressBar *finger, const int increment);
+
+    uint16_t sensor[20];
 
 private:
     Ui::MainWindow *ui;
@@ -50,6 +53,7 @@ private slots:
     void changeValueMinus();
 
     void handleReadyRead();
+    void portChange();
 };
 
 #endif // MAINWINDOW_H

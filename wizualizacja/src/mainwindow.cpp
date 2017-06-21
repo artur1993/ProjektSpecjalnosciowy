@@ -2,7 +2,9 @@
 #include "ui_mainwindow.h"
 #include "coloredprogressbar.h"
 #include <iostream>
+#include <iomanip>
 #include <QCoreApplication>
+#include <QList>
 
 void MainWindow::setupBackground()
 {
@@ -44,17 +46,17 @@ void MainWindow::setupFingers()
     finger43 = new ColoredProgressBar(ui->centralWidget);
 
     setFinger(finger11, 843, 45, 0);
-    setFinger(finger12, 733, 37, 10);
-    setFinger(finger13, 614, 97, 20);
-    setFinger(finger21, 1015, 143, 30);
-    setFinger(finger22, 910, 152, 40);
-    setFinger(finger23, 824, 162, 50);
-    setFinger(finger31, 1030, 248, 60);
-    setFinger(finger32, 934, 242, 70);
-    setFinger(finger33, 844, 238, 80);
-    setFinger(finger41, 997, 338, 90);
-    setFinger(finger42, 902, 326, 100);
-    setFinger(finger43, 812, 314, 90);
+    setFinger(finger12, 733, 37, 0);
+    setFinger(finger13, 614, 97, 0);
+    setFinger(finger21, 1015, 143, 0);
+    setFinger(finger22, 910, 152, 0);
+    setFinger(finger23, 824, 162, 0);
+    setFinger(finger31, 1030, 248, 0);
+    setFinger(finger32, 934, 242, 0);
+    setFinger(finger33, 844, 238, 0);
+    setFinger(finger41, 997, 338, 0);
+    setFinger(finger42, 902, 326, 0);
+    setFinger(finger43, 812, 314, 0);
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -66,16 +68,19 @@ MainWindow::MainWindow(QWidget *parent) :
     setupBackground();
     setupFingers();
 
-    //timer = new QTimer(this);
-    //connect(timer, SIGNAL(timeout()), this, SLOT(changeValuePlus()));
-    //timer->start(50);
-
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(changeValuePlus()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(changeValueMinus()));
 
+    Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()) {
+         ui->comboBox->addItem(port.portName());
+    }
+
     serialPort = new QSerialPort(this);
-    serialPort->setPortName( QString("COM3") );
-    serialPort->setBaudRate( QSerialPort::Baud19200 );
+
+    connect( ui->comboBox, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &MainWindow::portChange);
+
+    serialPort->setPortName( ui->comboBox->currentText() );
+    serialPort->setBaudRate( QSerialPort::Baud115200 );
     serialPort->setDataBits( QSerialPort::Data8 );
     serialPort->setParity( QSerialPort::NoParity );
     serialPort->setStopBits( QSerialPort::OneStop );
@@ -113,7 +118,7 @@ void MainWindow::changeValuePlus()
 
 void MainWindow::changeValueMinus()
 {
-    int decrement = -5;
+    int decrement = -2;
     changeFingerValue(finger11, decrement);
     changeFingerValue(finger12, decrement);
     changeFingerValue(finger13, decrement);
@@ -130,14 +135,43 @@ void MainWindow::changeValueMinus()
 
 void MainWindow::handleReadyRead()
 {
-    static qint32 number = 0;
+    uint16_t tmp;
 
-    ++number;
-    //readData.append(serialPort->readAll());
-    //ui->label->setText(readData);
-    // readData.clear();
+    readData.append(serialPort->readAll());
 
-    ui->label->setText(QString::number(number));
+    if ( readData.size() >= 82 )
+    {
+        for ( int i = 0; i < 20; ++i )
+        {
+            tmp = ((((uint16_t)readData[i*4+1]<<8)|readData[i*4+2])>>6);
+            if ( tmp > 0 && tmp < 60000 )
+            {
+                sensor[i] = tmp;
+            }
+        }
+
+        std::cout << (int)readData[0] << ' ';
+        for ( int i = 0; i < 20; ++i )
+        {
+            std::cout << std::setw(5);
+            std::cout << sensor[i] << ' ';
+        }
+        std::cout << std::endl;
+
+        finger11->setValue( 100 - (int)((float)sensor[3] / 3.01) );
+        finger12->setValue( 100 - (int)((float)sensor[11] / 4.29) );
+        finger21->setValue( 100 - (int)((float)sensor[1] / 3.32) );
+        finger22->setValue( 100 - (int)((float)sensor[2] / 4.32) );
+        finger31->setValue( 100 - (int)((float)sensor[7] / 3.28) );
+        finger32->setValue( 100 - (int)((float)sensor[16] / 2.64) );
+
+        readData.clear();
+    }
+}
+
+void MainWindow::portChange()
+{
+    serialPort->setPortName( ui->comboBox->currentText() );
 }
 
 MainWindow::~MainWindow()

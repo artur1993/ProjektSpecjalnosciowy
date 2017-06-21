@@ -43,9 +43,9 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>130</x>
       <y>10</y>
-      <width>101</width>
+      <width>41</width>
       <height>21</height>
      </rect>
     </property>
@@ -55,7 +55,17 @@
      </font>
     </property>
     <property name="text">
-     <string>Licznik</string>
+     <string>Port:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>10</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
     </property>
    </widget>
   </widget>
