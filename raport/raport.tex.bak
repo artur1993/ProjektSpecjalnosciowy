@@ -56,16 +56,16 @@ ARR
 		\subsection{Czujniki}
 			W projekcie zostały wykorzystane moduły czujników stworzone przez Mariusza Głębockiego. \cite{Moduly}
 			
-			W modułach zostały zastosowane czujniki \cite{MPL112A2}
+			W modułach zostały zastosowane czujniki MPL115A2 \cite{MPL112A2}
 			
 		\subsection{Płytka}
 			
 			\begin{figure}[H]
-		     	 \includegraphics[width=0.1\textwidth]{obrazy/plytka.png}
+		     	 \includegraphics[width=1\textwidth]{obrazy/plytka.jpg}
 			\end{figure}
 		
 			\subsubsection{Płytka}
-				W projekcie została użyta uniwersalna płytka o wymiarach 17x6.5 cm na której zostało umieszczone 20 złącz pod czujniki oraz złącze pod komunikację uart i Nucleo. 
+				W projekcie została użyta uniwersalna płytka o wymiarach 17x6.5 cm na której zostało umieszczone 20 złącz pod czujniki oraz złącze pod komunikację UART i Nucleo. 
 						
 			\subsubsection{Moduł nucleo}
 				Ze względu na potrzebną ilość portów komunikacji i2c wybrano moduł STM32 NUCLEO-F411RE
@@ -73,47 +73,58 @@ ARR
 	\section{Wykonanie projektu}		
 		\subsection{Komunikacja}
 			\subsubsection{Czujniki}		
-				Czujniki z modułem Nucleo wykorzystują komunikację i2c do połączenia, karzdy czujniki jest odpytywany osobno a następnie zebrane dane zostają przesłane do komputera.
+				Czujniki z modułem Nucleo wykorzystują komunikację i2c do połączenia, każdy czujniki jest odpytywany osobno a następnie zebrane dane zostają przesłane do komputera. 
 			\subsubsection{Przesyłanie danych do komputera}
-			Dane przesyłane zostaną w postaci ośmiobajtowej ramki. Pojedyńcza wiadomość będzie zawierać informację o ciśnieniu, temperaturze i identyfikator czujnika oraz bajt start, bajt sumy kontrolnej.
+			Dane przesyłane zostaną w postaci ośmiobajtowej ramki. Pojedyncza wiadomość będzie zawierać informację o ciśnieniu, temperaturze i identyfikator czujnika oraz bajt start, bajt sumy kontrolnej.
 			\subsubsection{Komputer}
 				Połączenie ręki z komputerem zostało opracowane z wykorzystaniem komunikacji UART. W tym celu skonfigurowano odpowiednie wyprowadzenia z mikrokontrolera na płytce Nucleo. Od strony komputera użyto przejściówki RS-232 na USB. Prędkość komunikacji ustawiono na 115200 bps, co wystarcza do natychmiastowego przesyłania danych z czujników.	
 		\subsection{Software}
 			\subsubsection{Nucleo}
-				Program został napisany w języku C i źródła zostaną załączone do raportu w osobnych plikach.
+				Program został napisany w języku C i źródła zostaną załączone wraz z komentarzem do raportu w osobnych plikach.
 			\subsubsection{Wizualizacja}
-				Część wizualizacyjna została napisana w języku C++ i bibliotekach Qt. Źródła projektu zostaną załączone w osobnych plikach.
+				Część wizualizacyjna została napisana w języku C++ i bibliotekach Qt. Źródła projektu wraz z niezbędną dokumentacją zostaną załączone w osobnych plikach.
 		\subsection{Rozmieszczenie czujników na ręce}
 		Czujniki zostały rozmieszczone:
 		\begin{itemize}
-			\item Na pierwszym palcu
-			\item Drugim
-			\item Tezecim
-			\item kciuku
+			\item Na kciuku został umieszczony moduł z trzema czujnikami oraz z dwoma.
+			\item Na palcu wskazującym umieszczono moduły z trzema i jednym czujnikiem.
+			\item Na palcu środkowym z trzema i dwoma czujnikami.
 		\end{itemize}
+		
+		\begin{figure}[H]
+		     	 \includegraphics[width=1\textwidth]{obrazy/dlon.jpg}
+			\end{figure}
+			
+			Rozmieszczenie czujników było oparte na wcześniejszym projekcie oraz brakiem odpowiedniej liczby sprawnych czujników. Moduły zostały zamocowane za pomocą kleju to do konstrukcji metalowej.
 		
 
 	\section{Rezultaty projektu}	
 	
-	dla karzdego z czujników jest wysyłana temperatura
+	\begin{figure}[H]
+		     	 \includegraphics[width=1\textwidth]{obrazy/reka.jpg}
+			\end{figure}
 	
-	jak się wyśle coś do procesora to zwraca jakieś coefisienty z harakterystyką czujników.	
+	W wyniku projektu zostały podłączone i zamocowane moduły do zbierania informacji o nacisku i temperaturze dotykanych przedmiotów. Układ został podłączony do płytki Nucleo i dalej za pomocą komunikacji UART dane z czujnków są przestyłane do komputera. Na potrzeby zobrazowania działania modułów został wykonany program wizualizujący ich działanie. Po wysłaniu DOPISZCIE KTO SIĘ ZNA CO TO JEST -> jak się wyśle coś do procesora to zwraca jakieś coefisienty z charakterystyką czujników.	Poniżej zostanie przedstawiony przykładowy efekt wizualizacji:
+	
+	\begin{figure}[H]
+		     	 \includegraphics[width=1\textwidth]{obrazy/wizualizacja.png}
+			\end{figure}
 			
 	\section{Wnioski i perspektywy rozwoju}
-		Główną trudność w projekcie stanowiły moduły czujników. Przy projektowaniu i wykonaniu zostało popełnione kilka istotnych błędów. Na płytkach zostały na stałe wlutowane rezystory podciągające co spowodowało, że nie można było podłączyć wszystkich czujników do jednej lini
-	urządzenie jest przewidziane na większą liczbę czujników.
+		Główną trudność w projekcie stanowiły moduły czujników. Przy projektowaniu i wykonaniu zostało popełnione kilka istotnych błędów. Na płytkach zostały na stałe wlutowane rezystory podciągające co spowodowało, że nie można było podłączyć wszystkich czujników do jednej linii. Problem ten został częściowo naprawiony poprzez zastosowanie procesora z trzema portami komunikacji i2c. Kolejnym niedopatrzeniem było wyprowadzanie zbyt dużej ilości przewodów, możliwe byłoby ich zmniejszenie poprzez połączenie masy i zasilania już na modułach oraz zastosowanie czujników z zmiennym adresem, dzięki takim operacją zamiast wyprowadzenia sześću przewodów z czujnika zredukowane zostałoby do sześciu przewodów z modułu dodatkowo pozwoliłoby to na połączenie przewodów już na dłoni i ostatecznie poprowadzenie sześciu przewodów z całego układu modułów.
+		Płytka została przygotowane pod większą ilość czujników i podłączając kolejne należało by jedynie zmodyfikować kod programu o sprawdzanie kolejnych czujników.
 	
 	\section{Bibliografia}
 \begin{thebibliography}{99}
 
 \bibitem{Reka} Cebernetyczna proteza dłoni - system mechaniczny oraz sensoryka i sterowanie,
-\textit {$Grzegorz Wiśniewski, Wrocław 2010$}
+\textit {Grzegorz Wiśniewski, Wrocław 2010}
 
 \bibitem{Moduly} Sensor dotyku i poślizgu dla wykrywania interakcji chwytaka robotycznego z uchwyconym przedmiotem.,
-\textit {$Mariusz Głębocki, Wrocław 2016$}
+\textit {Mariusz Głębocki, Wrocław 2016}
 
-\bibitem{MPL112A2} Miniature i2c digital barometer.,
-\textit {$http://www.nxp.com/assets/documents/data/en/data-sheets/MPL115A2.pdf. Dostęp z dnia: 2017-01-14.$}
+\bibitem{MPL112A2} MPL115A2,
+\textit {$http://www.nxp.com/assets/documents/data/en/data-sheets/MPL115A2.pdf.$ Dostęp z dnia: 2017-01-14.}
 
 
 
